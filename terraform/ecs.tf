@@ -4,6 +4,11 @@ data "aws_caller_identity" "current" {}
 # ECS
 resource "aws_ecs_cluster" "backend" {
   name = "backend"
+
+  setting {
+    name  = "containerInsights"
+    value = "enabled"
+  }
 }
 
 resource "aws_ecs_service" "backend" {
