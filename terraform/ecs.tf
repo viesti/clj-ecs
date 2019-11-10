@@ -41,7 +41,7 @@ resource "aws_ecs_task_definition" "backend" {
 [
   {
     "name": "backend",
-    "image": "${aws_ecr_repository.backend.repository_url}:${var.backend_tag}",
+    "image": "${aws_ecr_repository.backend.repository_url}:${var.git_sha}",
     "cpu": ${var.backend_cpu},
     "memory": ${var.backend_memory},
     "essential": true,
@@ -64,6 +64,10 @@ resource "aws_ecs_task_definition" "backend" {
       {
         "name": "PORT",
         "value": "4000"
+      },
+      {
+        "name": "GIT_SHA",
+        "value": "${var.git_sha}"
       }
     ]
   }

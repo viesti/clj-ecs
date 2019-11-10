@@ -8,8 +8,8 @@ variable "backend_port" {
   default     = 4000
 }
 
-variable "backend_tag" {
-  description = "Docker image tag of the backend to deploy"
+variable "git_sha" {
+  description = "Git commit ID of the backend. Used for Docker image tag and passed to the application via GIT_SHA environment variable."
 }
 
 variable "backend_cpu" {
