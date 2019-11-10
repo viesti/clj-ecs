@@ -3,7 +3,10 @@ resource "aws_lb" "backend" {
   internal = false
   load_balancer_type = "application"
   security_groups = ["${aws_security_group.lb.id}"]
-  subnets = [aws_subnet.public-a.id, aws_subnet.public-b.id]
+  subnets = [
+    data.terraform_remote_state.common.outputs.public-subnet-a-id,
+    data.terraform_remote_state.common.outputs.public-subnet-b-id,
+  ]
   idle_timeout = 900
 
   access_logs {
@@ -23,7 +26,7 @@ resource "aws_lb_target_group" "backend" {
   port = var.backend_port
   protocol = "HTTP"
   deregistration_delay = 30
-  vpc_id = aws_vpc.main.id
+  vpc_id = data.terraform_remote_state.common.outputs.vpc_id
   target_type = "ip"
 
   health_check {

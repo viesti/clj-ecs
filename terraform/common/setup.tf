@@ -5,6 +5,5 @@ provider "aws" {
 terraform {
   backend "s3" {
     bucket = "metosin-terraform"
-    key = "backend.tfstate"
   }
 }

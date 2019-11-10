@@ -2,4 +2,14 @@
 
 GIT_SHA=$(git rev-parse --short HEAD)
 COMMAND=${1:-apply}
-terraform $COMMAND -var git_sha=$GIT_SHA
+PROJECT=$(basename $PWD)
+
+case $COMMAND in
+    init)
+        terraform init \
+                  -backend-config="key=$PROJECT.tfstate"
+        ;;
+    *)
+        terraform $COMMAND
+        ;;
+esac
