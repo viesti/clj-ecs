@@ -35,15 +35,15 @@ resource "aws_ecs_task_definition" "backend" {
   network_mode             = "awsvpc"
   requires_compatibilities = ["FARGATE"]
   execution_role_arn       = aws_iam_role.backend.arn
-  cpu                      = 512
-  memory                   = 1024
+  cpu                      = var.backend_cpu
+  memory                   = var.backend_memory
   container_definitions    = <<EOF
 [
   {
     "name": "backend",
     "image": "${aws_ecr_repository.backend.repository_url}:${var.backend_tag}",
-    "cpu": 512,
-    "memory": 1024,
+    "cpu": ${var.backend_cpu},
+    "memory": ${var.backend_memory},
     "essential": true,
     "portMappings": [
       {

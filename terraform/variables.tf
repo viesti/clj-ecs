@@ -11,3 +11,13 @@ variable "backend_port" {
 variable "backend_tag" {
   description = "Docker image tag of the backend to deploy"
 }
+
+variable "backend_cpu" {
+  description = "CPU value for the Fargate task"
+  default = 512
+}
+
+variable "backend_memory" {
+  description = "Memory value for the Fargate task"
+  default = 1024
+}
