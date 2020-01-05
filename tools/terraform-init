@@ -1,0 +1,5 @@
+#!/bin/bash
+
+PROJECT=$(basename $PWD)
+terraform init \
+          -backend-config="key=$PROJECT.tfstate"
