@@ -13,13 +13,13 @@ resource "aws_ecs_cluster" "backend" {
 
 resource "aws_ecs_service" "backend" {
   name            = "backend"
-  cluster         = "${aws_ecs_cluster.backend.id}"
-  task_definition = "${aws_ecs_task_definition.backend.arn}"
+  cluster         = aws_ecs_cluster.backend.id
+  task_definition = aws_ecs_task_definition.backend.arn
   desired_count   = 2
   launch_type     = "FARGATE"
 
   load_balancer {
-    target_group_arn = "${aws_lb_target_group.backend.arn}"
+    target_group_arn = aws_lb_target_group.backend.arn
     container_name   = "backend"
     container_port   = var.backend_port
   }

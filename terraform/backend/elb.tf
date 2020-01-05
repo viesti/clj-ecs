@@ -2,7 +2,7 @@ resource "aws_lb" "backend" {
   name = "backend"
   internal = false
   load_balancer_type = "application"
-  security_groups = ["${aws_security_group.lb.id}"]
+  security_groups = [aws_security_group.lb.id]
   subnets = [
     data.terraform_remote_state.common.outputs.public-subnet-a-id,
     data.terraform_remote_state.common.outputs.public-subnet-b-id,
@@ -43,19 +43,19 @@ resource "aws_lb_target_group" "backend" {
 }
 
 resource "aws_lb_listener" "http" {
-  load_balancer_arn = "${aws_lb.backend.arn}"
+  load_balancer_arn = aws_lb.backend.arn
   port = "80"
   protocol = "HTTP"
 
   default_action {
     type = "forward"
-    target_group_arn = "${aws_lb_target_group.backend.arn}"
+    target_group_arn = aws_lb_target_group.backend.arn
   }
 
 }
 
 resource "aws_s3_bucket_policy" "backend-lb-logs" {
-  bucket = "${aws_s3_bucket.backend-lb-logs.id}"
+  bucket = aws_s3_bucket.backend-lb-logs.id
 
   policy = <<EOF
 {
