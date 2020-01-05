@@ -26,8 +26,8 @@ resource "aws_ecs_service" "backend" {
 
   network_configuration {
     subnets         = [
-      data.terraform_remote_state.common.outputs.public-subnet-a-id,
-      data.terraform_remote_state.common.outputs.public-subnet-b-id
+      data.terraform_remote_state.common.outputs.private-subnet-a-id,
+      data.terraform_remote_state.common.outputs.private-subnet-b-id
     ]
     security_groups = [aws_security_group.backend.id]
   }
