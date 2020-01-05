@@ -47,11 +47,14 @@ resource "aws_ecs_task_definition" "backend" {
     "image": "${aws_ecr_repository.backend.repository_url}:${var.git_sha}",
     "cpu": ${var.backend_cpu},
     "memory": ${var.backend_memory},
+    "mountPoints": [],
+    "volumesFrom": [],
     "essential": true,
     "portMappings": [
       {
           "containerPort": ${var.backend_port},
-          "hostPort": ${var.backend_port}
+          "hostPort": ${var.backend_port},
+          "protocol": "tcp"
       }
     ],
     "networkMode": "awsvpc",
