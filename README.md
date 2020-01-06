@@ -4,7 +4,7 @@ Provides and example of a AWS Architecture for running a ECS service. The app pr
 
 ## Architecture
 
-The AWS architecture is created via Terraform by two modules:
+The AWS architecture is created by Terraform modules:
 
 ### [common](terraform/common)
 
