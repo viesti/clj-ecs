@@ -52,3 +52,13 @@ Module for Continuous Integration resources. Contains the following resources de
 Below is a network diagram of the architecture:
 
 ![Architecture picture](architecture.png)
+
+## Todo
+
+* [ ] Terraform usage instructions
+  * [ ] tools/terraform-init
+  * [ ] Module deployment order (start from here)
+* [ ] CircleCI setup
+* [ ] Database module
+* [ ] State file encryption setup
+* [ ] Application environment variables as single Terraform variable of type map, embed as JSON encoded string to container definition
