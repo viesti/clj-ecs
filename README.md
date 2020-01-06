@@ -6,8 +6,7 @@ Provides and example of a AWS Architecture for running a ECS service. The app pr
 
 The AWS architecture is created via Terraform by two modules:
 
-* [common](terraform/common)
-  VPC with public (for ALB) and private (for backends) subnets. Contains the following resources defined via Terraform:
+* [common](terraform/common): A VPC with public (for ALB) and private (for backends) subnets. Contains the following resources defined via Terraform:
   * aws_eip.nat
   * aws_internet_gateway.igw
   * aws_nat_gateway.nat-gw
@@ -23,8 +22,7 @@ The AWS architecture is created via Terraform by two modules:
   * aws_subnet.public-b
   * aws_vpc.main
   
-* [backend](terraform/backend)
-  A ECS service with a load balancer. Contains the following resources defined via Terraform:
+* [backend](terraform/backend): A ECS service with a load balancer. Contains the following resources defined via Terraform:
   * aws_cloudwatch_log_group.backend
   * aws_ecr_repository.backend
   * aws_ecs_cluster.backend
