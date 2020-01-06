@@ -62,3 +62,4 @@ Below is a network diagram of the architecture:
 * [ ] Database module
 * [ ] State file encryption setup
 * [ ] Application environment variables as single Terraform variable of type map, embed as JSON encoded string to container definition
+* [ ] EC2 "bastion" node in private network for port forwarding via SSM
