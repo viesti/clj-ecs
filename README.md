@@ -24,7 +24,6 @@ The AWS architecture is created via Terraform by two modules:
   
 * [backend](terraform/backend): A ECS service with a load balancer. Contains the following resources defined via Terraform:
   * aws_cloudwatch_log_group.backend
-  * aws_ecr_repository.backend
   * aws_ecs_cluster.backend
   * aws_ecs_service.backend
   * aws_ecs_task_definition.backend
@@ -38,4 +37,9 @@ The AWS architecture is created via Terraform by two modules:
   * aws_security_group.backend
   * aws_security_group.lb
   
+* [ci](terraform/ci): Module for Continuous Integration resources. Contains the following resources defined via Terraform:
+  * aws_ecr_repository.backend
+
+Below is a network diagram of the architecture:
+
 ![Architecture picture](architecture.png)
