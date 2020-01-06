@@ -16,3 +16,11 @@ data "terraform_remote_state" "common" {
     key    = "common.tfstate"
   }
 }
+
+data "terraform_remote_state" "ci" {
+  backend = "s3"
+  config = {
+    bucket = "metosin-terraform"
+    key    = "ci.tfstate"
+  }
+}

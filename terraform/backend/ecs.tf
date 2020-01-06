@@ -44,7 +44,7 @@ resource "aws_ecs_task_definition" "backend" {
 [
   {
     "name": "backend",
-    "image": "${aws_ecr_repository.backend.repository_url}:${var.git_sha}",
+    "image": "${data.terraform_remote_state.ci.outputs.backend_repository_url}:${var.git_sha}",
     "cpu": ${var.backend_cpu},
     "memory": ${var.backend_memory},
     "mountPoints": [],
@@ -79,6 +79,11 @@ resource "aws_ecs_task_definition" "backend" {
   }
 ]
 EOF
+}
+
+resource "aws_cloudwatch_log_group" "backend" {
+  name              = "backend"
+  retention_in_days = 365
 }
 
 # IAM
