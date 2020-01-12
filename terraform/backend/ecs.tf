@@ -40,45 +40,44 @@ resource "aws_ecs_task_definition" "backend" {
   execution_role_arn       = aws_iam_role.backend.arn
   cpu                      = var.backend_cpu
   memory                   = var.backend_memory
-  container_definitions    = <<EOF
+  container_definitions    = jsonencode(
 [
   {
-    "name": "backend",
-    "image": "${data.terraform_remote_state.ci.outputs.backend_repository_url}:${var.git_sha}",
-    "cpu": ${var.backend_cpu},
-    "memory": ${var.backend_memory},
-    "mountPoints": [],
-    "volumesFrom": [],
-    "essential": true,
-    "portMappings": [
+    name = "backend"
+    image = "${data.terraform_remote_state.ci.outputs.backend_repository_url}:${var.git_sha}"
+    cpu = var.backend_cpu
+    memory = var.backend_memory
+    mountPoints = []
+    volumesFrom = []
+    essential = true
+    portMappings = [
       {
-          "containerPort": ${var.backend_port},
-          "hostPort": ${var.backend_port},
-          "protocol": "tcp"
+          containerPort = var.backend_port
+          hostPort = var.backend_port
+          protocol = "tcp"
       }
-    ],
-    "networkMode": "awsvpc",
-    "logConfiguration": {
-        "logDriver": "awslogs",
-        "options": {
-          "awslogs-group": "${aws_cloudwatch_log_group.backend.name}",
-          "awslogs-region": "${data.aws_region.current.name}",
-          "awslogs-stream-prefix": "backend-"
+    ]
+    networkMode = "awsvpc"
+    logConfiguration = {
+        logDriver = "awslogs"
+        options = {
+          awslogs-group = aws_cloudwatch_log_group.backend.name
+          awslogs-region = data.aws_region.current.name
+          awslogs-stream-prefix = "backend-"
         }
     },
-    "environment": [
+    environment = [
       {
-        "name": "PORT",
-        "value": "4000"
+        name = "PORT"
+        value = "4000"
       },
       {
-        "name": "GIT_SHA",
-        "value": "${var.git_sha}"
+        name = "GIT_SHA"
+        value = var.git_sha
       }
     ]
   }
-]
-EOF
+])
 }
 
 resource "aws_cloudwatch_log_group" "backend" {
@@ -89,20 +88,19 @@ resource "aws_cloudwatch_log_group" "backend" {
 # IAM
 resource "aws_iam_role" "backend" {
   name               = "backend"
-  assume_role_policy = <<EOF
+  assume_role_policy = jsonencode(
 {
-  "Version": "2012-10-17",
-  "Statement": [
+  Version = "2012-10-17"
+  Statement = [
     {
-      "Effect": "Allow",
-      "Principal": {
-        "Service": "ecs-tasks.amazonaws.com"
-      },
-      "Action": "sts:AssumeRole"
+      Effect = "Allow"
+      Principal = {
+        Service = "ecs-tasks.amazonaws.com"
+      }
+      Action = "sts:AssumeRole"
     }
   ]
-}
-EOF
+})
 }
 
 resource "aws_iam_role_policy_attachment" "backend" {

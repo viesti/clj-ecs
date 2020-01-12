@@ -57,43 +57,42 @@ resource "aws_lb_listener" "http" {
 resource "aws_s3_bucket_policy" "backend-lb-logs" {
   bucket = aws_s3_bucket.backend-lb-logs.id
 
-  policy = <<EOF
+  policy = jsonencode(
 {
-    "Id": "AccessLogsPolicy",
-    "Statement": [{
-            "Action": "s3:PutObject",
-            "Effect": "Allow",
-            "Principal": {
-                "AWS": "arn:aws:iam::${var.elb_account_id}:root"
+    Id = "AccessLogsPolicy"
+    Statement = [{
+            Action = "s3:PutObject"
+            Effect = "Allow"
+            Principal = {
+                AWS = "arn:aws:iam::${var.elb_account_id}:root"
             },
-            "Resource": "${aws_s3_bucket.backend-lb-logs.arn}/AWSLogs/${data.aws_caller_identity.current.account_id}/*",
-            "Sid": "AllowWriteFromLoadBalancerAccount"
+            Resource = "${aws_s3_bucket.backend-lb-logs.arn}/AWSLogs/${data.aws_caller_identity.current.account_id}/*"
+            Sid = "AllowWriteFromLoadBalancerAccount"
         },
         {
-            "Action": "s3:PutObject",
-            "Condition": {
-                "StringEquals": {
-                    "s3:x-amz-acl": "bucket-owner-full-control"
+            Action = "s3:PutObject"
+            Condition = {
+                StringEquals = {
+                    "s3:x-amz-acl" = "bucket-owner-full-control"
                 }
             },
-            "Effect": "Allow",
-            "Principal": {
-                "Service": "delivery.logs.amazonaws.com"
+            Effect = "Allow"
+            Principal = {
+                Service = "delivery.logs.amazonaws.com"
             },
-            "Resource": "${aws_s3_bucket.backend-lb-logs.arn}/AWSLogs/${data.aws_caller_identity.current.account_id}/*",
-            "Sid": "AWSLogDeliveryWrite"
+            Resource = "${aws_s3_bucket.backend-lb-logs.arn}/AWSLogs/${data.aws_caller_identity.current.account_id}/*"
+            Sid = "AWSLogDeliveryWrite"
         },
         {
-            "Action": "s3:GetBucketAcl",
-            "Effect": "Allow",
-            "Principal": {
-                "Service": "delivery.logs.amazonaws.com"
+            Action = "s3:GetBucketAcl"
+            Effect = "Allow"
+            Principal = {
+                Service = "delivery.logs.amazonaws.com"
             },
-            "Resource": "${aws_s3_bucket.backend-lb-logs.arn}",
-            "Sid": "AWSLogDeliveryAclCheck"
+            Resource = aws_s3_bucket.backend-lb-logs.arn
+            Sid = "AWSLogDeliveryAclCheck"
         }
     ],
-    "Version": "2012-10-17"
-}
-EOF
+    Version = "2012-10-17"
+})
 }
